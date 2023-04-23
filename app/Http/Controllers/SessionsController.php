@@ -10,14 +10,14 @@ class SessionsController extends Controller
 {
     public function create()
     {
-        return view('session.login-session');
+        return view('auth.login-auth');
     }
 
     public function store()
     {
         $attributes = request()->validate([
             'email'=>'required|email',
-            'password'=>'required' 
+            'password'=>'required'
         ]);
 
         if(Auth::attempt($attributes))
@@ -30,7 +30,7 @@ class SessionsController extends Controller
             return back()->withErrors(['email'=>'Email or password invalid.']);
         }
     }
-    
+
     public function destroy()
     {
 
