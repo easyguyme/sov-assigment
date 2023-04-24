@@ -64,7 +64,7 @@ class Post extends Model
         parent::boot();
 
         static::creating(function ($post) {
-            $post->user_id = Auth::id();
+            $post->user_id = Auth::id()??1;
             $post->slug = $post->getSlugAttribute();
         });
 
