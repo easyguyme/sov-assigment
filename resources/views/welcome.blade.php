@@ -1,53 +1,43 @@
 @extends('layouts.blog')
 
 @section('content')
-    <section class="py-5 bg-gray-100">
+
+    <section class="py-6 bg-gray-100">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <div class="card card-blog card-plain">
-                        <div class="position-relative">
-                            <a class="d-block blur-shadow-image">
-                                <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/devices-table.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
+                @if(count($allposts) > 0)
+                    @foreach($allposts as $post)
+                <div class="col-lg-4 mb-lg-0 mb-4">
+                    <div class="card">
+                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+                            <a href="{{route('posts.show',$post->slug)}}" class="d-block">
+                                <img src="{{url('uploads/',$post->image)}}" class="img-fluid border-radius-lg">
                             </a>
                         </div>
-                        <div class="card-body px-0 pt-4">
-                            <p class="text-gradient text-primary text-gradient font-weight-bold text-sm text-uppercase">Enterprise</p>
-                            <a href="javascript:;">
-                                <h4>
-                                    Siri brings hands-free TV to more devices
-                                </h4>
+
+                        <div class="card-body pt-3">
+
+                            <a href="{{route('posts.show',$post->slug)}}" class="card-title h5 d-block text-darker">
+                                {{$post->title}}
                             </a>
-                            <p>
-                                Siri&#39;s latest trick is offering a hands-free TV viewing experience, that will allow consumers to turn on or off their television, change inputs, fast forward, rewind and more, without having to first invoke a specific skill, or even
-                                press a button on their remote.
+                            <p class="card-description mb-4">
+                                {{$post->excerpt}}
                             </p>
-                            <button type="button" class="btn bg-gradient-primary mt-3">Read more</button>
+                            <div class="author align-items-center">
+
+                                <div class="name ps-3">
+                                    <span>Post By: {{$post->user->name}}</span>
+                                    <div class="stats">
+                                        <small>Posted on {{$post->updated_at->format('F j, Y g:i A')}}</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 mx-auto text-center mt-5">
-                    <div class="card card-blog card-plain">
-                        <div class="position-relative">
-                            <a class="d-block blur-shadow-image">
-                                <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/mic.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
-                            </a>
-                        </div>
-                        <div class="card-body px-0 pt-4">
-                            <p class="text-gradient text-warning text-gradient font-weight-bold text-sm text-uppercase">Music</p>
-                            <a href="javascript:;">
-                                <h4>
-                                    Shark Week: How to Watch It Scientist
-                                </h4>
-                            </a>
-                            <p>
-                                As Uber works through a huge amount of internal management turmoil, the company is also consolidating and rationalizing more of its international business. Today, the company announced it will be combining its rides-on-demand business
-                                and UberEATS.
-                            </p>
-                            <button type="button" class="btn bg-gradient-warning mt-3">Read more</button>
-                        </div>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
+
             </div>
         </div>
     </section>

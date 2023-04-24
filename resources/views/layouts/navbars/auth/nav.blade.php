@@ -1,8 +1,8 @@
 <!-- Navbar -->
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
     <div class="container-fluid py-1 px-3">
-        @if (\Request::is('/'))
-        @else
+        @if (\Request::is('dashboard'))
+
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                     <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
@@ -15,14 +15,14 @@
 
 
             <ul class="navbar-nav  justify-content-end">
-                @if (\Request::is('/'))
+
                     <li class="nav-item d-flex align-items-center m-2">
                         <a href="{{ url('/dashboard')}}" class="nav-link text-body font-weight-bold px-0">
                             <i class="fa fa-dashboard"></i>
                             <span class="d-sm-inline d-none" title="Dashboard">Dashboard</span>
                         </a>
                     </li>
-                @endif
+
             <li class="nav-item d-flex align-items-center">
                 <a href="{{ url('/logout')}}" class="nav-link text-body font-weight-bold px-0">
                     <i class="fa fa-user me-sm-1"></i>

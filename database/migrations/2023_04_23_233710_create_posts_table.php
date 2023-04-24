@@ -18,10 +18,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->text('excerpt')->nullable();
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->longText('image')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1 => Published, 2 => Draft');
-            $table->datetime('publish_on')->nullable();
             $table->timestamps();
         });
     }
