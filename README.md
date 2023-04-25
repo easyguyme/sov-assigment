@@ -50,7 +50,7 @@ Besides the dashboard, the auth pages, the billing and table pages, there is als
 
 
 ### Login
-If you are not logged in you can only access this page or the Sign Up page. The default url takes you to the login page where you use the default credentials **admin@admin.com** with the password **secret**. Logging in is possible only with already existing credentials. For this to work you should have run the migrations.
+If you are not logged in you can only access this page or the Sign Up page. The default url takes you to the login page where you use the default credentials **admin@admin.com** with the password **password**. Logging in is possible only with already existing credentials. For this to work you should have run the migrations.
 
 The `App\Http\Controllers\SessionController` handles the logging in of an existing user.
 
