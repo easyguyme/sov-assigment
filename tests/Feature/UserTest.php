@@ -2,13 +2,19 @@
 
 namespace Tests\Feature;
 
+use App\Models\Post;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use App\Models\User;
 class UserTest extends TestCase
 {
+    use RefreshDatabase;
+
     private $test_email = 'johndoe@example.com';
     /**
      * A basic test example.
@@ -86,7 +92,7 @@ class UserTest extends TestCase
     {
         $response = $this->post('/register', [
             'name' => 'John Doe',
-            'email' => 'johndoe2@example.com',
+            'email' => 'johndoe4@example.com',
             'password' => 'secret',
             'password_confirmation' => 'secret',
             'agreement'=>1
@@ -96,7 +102,7 @@ class UserTest extends TestCase
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', [
             'name' => 'John Doe',
-            'email' => 'johndoe2@example.com',
+            'email' => 'johndoe4@example.com',
         ]);
     }
 
@@ -112,7 +118,60 @@ class UserTest extends TestCase
     }
 
 
+    /** @test */
+    public function an_authenticated_user_can_create_a_post()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        Storage::fake('public');
 
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $image = UploadedFile::fake()->image('post.jpg');
+        $response = $this->post('/posts', [
+            'user_id' => $user->id,
+            'title' => 'New post title',
+            'content' => 'New post content',
+            'excerpt' => 'New post excerpt',
+            'image' => $image,
+
+        ]);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('posts', [
+            'user_id' => $user->id,
+            'title' => 'New post title',
+            'content' => 'New post content',
+            'excerpt' => 'New post excerpt',
+
+        ]);
+
+    }
+
+    /** @test */
+    public function an_unauthenticated_user_cannot_create_a_post()
+    {
+        $response = $this->post('/posts', [
+            'user_id' => 1,
+            'title' => 'New post title',
+            'slug' => 'new-post-slug',
+            'content' => 'New post content',
+            'excerpt' => 'New post excerpt',
+            'image' => 'new-post-image.jpg',
+            'status' => 1,
+        ]);
+
+        $response->assertRedirect('/login');
+        $this->assertDatabaseMissing('posts', [
+            'title' => 'New post title',
+            'slug' => 'new-post-slug',
+            'content' => 'New post content',
+            'excerpt' => 'New post excerpt',
+            'image' => 'new-post-image.jpg',
+            'status' => 1,
+        ]);
+    }
 
 
 

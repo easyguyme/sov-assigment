@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class Post extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'user_id',
         'title',
@@ -19,6 +20,7 @@ class Post extends Model
         'content',
         'excerpt',
         'status',
+        'image'
     ];
 
     /**
